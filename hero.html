@@ -1,10 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EPÒK | Hero Landing</title>
+
+    <!-- ************************************************ -->
+    <!-- *************  INSERT YOUR ART HERE  *********** -->
+    <!-- ************************************************ -->
+
+    <script>
+        const HERO_BACKGROUND = "assets/9378.png";      // your full hero art image
+        const CREST_BUTTON   = "assets/crest1.png";     // your EPÒK crest button
+        const TAGLINE_TEXT   = "SURVIVE. RISE. BECOME."; // using text, not an image
+    </script>
+
+    <!-- ************************************************ -->
+    <!-- *********  DO NOT EDIT BELOW THIS LINE  ******** -->
+    <!-- ************************************************ -->
 
     <style>
         body {
@@ -16,28 +29,25 @@
             background: #000;
         }
 
-        /* HERO BACKGROUND IMAGE (YOUR ART) */
+        /* HERO BACKGROUND (Your Full Art) */
         .hero-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 105%;
             height: 105%;
-            background-image: url('assets/9378.png');
             background-size: cover;
             background-position: center;
             animation: heroMove 18s ease-in-out infinite alternate;
-            filter: drop-shadow(0px 0px 18px rgba(0,0,0,0.7));
         }
 
-        /* CAMERA / PARALLAX MOTION */
         @keyframes heroMove {
             0% { transform: scale(1) translate(0px, 0px); }
             50% { transform: scale(1.06) translate(-12px, -8px); }
             100% { transform: scale(1.03) translate(8px, 6px); }
         }
 
-        /* ENTER BUTTON (EPÒK CREST) */
+        /* CREST BUTTON */
         .enter-btn {
             position: absolute;
             bottom: 45px;
@@ -53,7 +63,7 @@
             filter: drop-shadow(0 0 15px gold);
         }
 
-        /* OPTIONAL TEXT FADE IN */
+        /* TAGLINE TEXT */
         .tagline {
             position: absolute;
             top: 8%;
@@ -78,14 +88,21 @@
 
 <body>
 
-    <!-- FULL HERO ART BACKGROUND -->
-    <div class="hero-bg"></div>
+    <!-- HERO BACKGROUND -->
+    <div class="hero-bg" id="heroBg"></div>
 
     <!-- TAGLINE -->
-    <div class="tagline">SURVIVE. RISE. BECOME.</div>
+    <div class="tagline" id="taglineText"></div>
 
-    <!-- EPÒK CREST BUTTON (replace file name if needed) -->
-    <img class="enter-btn" src="assets/crest1.png" onclick="location.href='index.html'">
+    <!-- CREST BUTTON -->
+    <img class="enter-btn" id="crestBtn" onclick="location.href='index.html'">
+
+    <script>
+        // Apply the images from the top settings
+        document.getElementById("assets/images/9378.png").style.backgroundImage = `url('${HERO_BACKGROUND}')`;
+        document.getElementById("assets/images/8187crest1.png").src = CREST_BUTTON;
+        document.getElementById("assets/images/8257.png").innerText = TAGLINE_TEXT;
+    </script>
 
 </body>
 </html>
