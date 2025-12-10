@@ -10,9 +10,9 @@
     <!-- ************************************************ -->
 
     <script>
-        const HERO_BACKGROUND = "assets/9378.png";      // your full hero art image
-        const CREST_BUTTON   = "assets/crest1.png";     // your EPÒK crest button
-        const TAGLINE_TEXT   = "SURVIVE. RISE. BECOME."; // using text, not an image
+        const HERO_BACKGROUND = "assets/images/9378.png";      // your full hero art image
+        const CREST_BUTTON   = "assets/images/8187.png";     // your EPÒK crest button
+        const TAGLINE_TEXT   = "assets/images/8257.png"; // using text, not an image
     </script>
 
     <!-- ************************************************ -->
@@ -30,7 +30,7 @@
         }
 
         /* HERO BACKGROUND (Your Full Art) */
-        .hero-bg {
+        #heroBg {
             position: absolute;
             top: 0;
             left: 0;
@@ -48,7 +48,7 @@
         }
 
         /* CREST BUTTON */
-        .enter-btn {
+        #crestBtn {
             position: absolute;
             bottom: 45px;
             left: 50%;
@@ -58,13 +58,13 @@
             transition: transform 0.3s ease, filter 0.3s ease;
         }
 
-        .enter-btn:hover {
+        #crestBtn:hover {
             transform: translateX(-50%) scale(1.08);
             filter: drop-shadow(0 0 15px gold);
         }
 
         /* TAGLINE TEXT */
-        .tagline {
+        #taglineText {
             position: absolute;
             top: 8%;
             width: 100%;
@@ -79,29 +79,28 @@
         }
 
         @keyframes textFade {
-            0% { opacity: 0; transform: translateY(20px);}
-            100% { opacity: 1; transform: translateY(0);}
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-
     </style>
 </head>
 
 <body>
 
     <!-- HERO BACKGROUND -->
-    <div class="hero-bg" id="heroBg"></div>
+    <div id="heroBg"></div>
 
     <!-- TAGLINE -->
-    <div class="tagline" id="taglineText"></div>
+    <div id="taglineText"></div>
 
     <!-- CREST BUTTON -->
-    <img class="enter-btn" id="crestBtn" onclick="location.href='index.html'">
+    <img id="crestBtn" onclick="location.href='index.html'">
 
     <script>
-        // Apply the images from the top settings
-        document.getElementById("assets/images/9378.png").style.backgroundImage = `url('${HERO_BACKGROUND}')`;
-        document.getElementById("assets/images/8187crest1.png").src = CREST_BUTTON;
-        document.getElementById("assets/images/8257.png").innerText = TAGLINE_TEXT;
+        // APPLY IMAGES + TEXT CORRECTLY
+        document.getElementById("heroBg").style.backgroundImage = `url('${HERO_BACKGROUND}')`;
+        document.getElementById("crestBtn").src = CREST_BUTTON;
+        document.getElementById("taglineText").innerText = TAGLINE_TEXT;
     </script>
 
 </body>
