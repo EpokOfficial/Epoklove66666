@@ -1,1 +1,91 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPÒK | Hero Landing</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            background: #000;
+        }
+
+        /* HERO BACKGROUND IMAGE (YOUR ART) */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 105%;
+            height: 105%;
+            background-image: url('assets/9378.png');
+            background-size: cover;
+            background-position: center;
+            animation: heroMove 18s ease-in-out infinite alternate;
+            filter: drop-shadow(0px 0px 18px rgba(0,0,0,0.7));
+        }
+
+        /* CAMERA / PARALLAX MOTION */
+        @keyframes heroMove {
+            0% { transform: scale(1) translate(0px, 0px); }
+            50% { transform: scale(1.06) translate(-12px, -8px); }
+            100% { transform: scale(1.03) translate(8px, 6px); }
+        }
+
+        /* ENTER BUTTON (EPÒK CREST) */
+        .enter-btn {
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 155px;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .enter-btn:hover {
+            transform: translateX(-50%) scale(1.08);
+            filter: drop-shadow(0 0 15px gold);
+        }
+
+        /* OPTIONAL TEXT FADE IN */
+        .tagline {
+            position: absolute;
+            top: 8%;
+            width: 100%;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: white;
+            font-size: 34px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 12px rgba(0,0,0,0.7);
+            opacity: 0;
+            animation: textFade 3s ease forwards 1.2s;
+        }
+
+        @keyframes textFade {
+            0% { opacity: 0; transform: translateY(20px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- FULL HERO ART BACKGROUND -->
+    <div class="hero-bg"></div>
+
+    <!-- TAGLINE -->
+    <div class="tagline">SURVIVE. RISE. BECOME.</div>
+
+    <!-- EPÒK CREST BUTTON (replace file name if needed) -->
+    <img class="enter-btn" src="assets/crest1.png" onclick="location.href='index.html'">
+
+</body>
+</html>
