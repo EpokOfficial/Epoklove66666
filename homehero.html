@@ -3,98 +3,92 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ENTER EPòꓘ</title>
+    <title>EPòꓘ | Enter Your Era</title>
 
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: black;
-            font-family: Arial, sans-serif;
+            background-color: black;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             overflow: hidden;
+            animation: fadeIn 2s ease-in forwards;
         }
 
-        /* Fade In */
-        .fade-in {
-            animation: fadeIn 2s ease forwards;
+        /* Gold Crest Image */
+        #crest {
+            width: 360px;
+            max-width: 85%;
             opacity: 0;
+            animation: crestFade 2.5s ease-out forwards 1s;
         }
+
+        /* ENTER YOUR EPòꓘ text */
+        #enterText {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            font-size: 1.7rem;
+            letter-spacing: 3px;
+            margin-top: 35px;
+            opacity: 0;
+            animation: textFade 2s ease-out forwards 2.8s;
+        }
+
+        /* Fade-in animation */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
-        /* Center Container */
-        .centered {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            text-align: center;
+        /* Crest fade+rise animation */
+        @keyframes crestFade {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Button */
-        .enter-btn {
-            margin-top: 30px;
-            padding: 14px 32px;
-            border: 2px solid white;
-            color: white;
-            font-size: 22px;
-            background: transparent;
-            cursor: pointer;
-            transition: 0.3s;
-            letter-spacing: 2px;
-        }
-        .enter-btn:hover {
-            background: white;
-            color: black;
+        /* Text fade+rise animation */
+        @keyframes textFade {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Transition Overlay */
-        .transition-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease;
+        /* Fade out before redirect */
+        .fadeOut {
+            animation: fadeOut 1.5s forwards;
         }
 
-        .show-transition {
-            opacity: 1;
-            pointer-events: auto;
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Title -->
-    <div class="centered fade-in">
-        <h1 style="font-size: 60px; letter-spacing: 4px;">ENTER EPòꓘ</h1>
+    <!-- Crest -->
+    <img id="crest" src="crest1.png" alt="EPòꓘ Gold Crest" />
 
-        <button class="enter-btn" onclick="startTransition()">
-            ENTER
-        </button>
-    </div>
-
-    <!-- Transition Layer -->
-    <div id="transitionLayer" class="transition-screen"></div>
+    <!-- ENTER TEXT -->
+    <div id="enterText">ENTER YOUR EPòꓘ</div>
 
     <script>
-        function startTransition() {
-            const layer = document.getElementById("transitionLayer");
-            layer.classList.add("show-transition");
+        // Entire intro duration before redirect
+        const introDuration = 5500; // 5.5 seconds
+
+        // Trigger fade-out + redirect
+        setTimeout(() => {
+            document.body.classList.add("fadeOut");
 
             setTimeout(() => {
-                window.location.href = "homehero.html";
-            }, 1100);
-        }
+                window.location.href = "index.html"; // Go to hero page
+            }, 1500);
+
+        }, introDuration);
     </script>
 
 </body>
