@@ -3,55 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EPØK | Enter Your Era</title>
+    <title>EPÒK | Enter Your Era</title>
 
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: black;
             overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            font-family: 'Cinzel', serif;
         }
 
-        .crest-container {
-            animation: fadeIn 2s ease forwards;
+        /* --- HERO BACKGROUND (CINEMATIC DRIFT) --- */
+        #hero-bg {
+            position: fixed;
+            inset: 0;
+            background-image: url("assets/images/9378.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             opacity: 0;
+            animation: bgFadeIn 2.2s ease forwards 2.2s,
+                       heroDrift 20s ease-in-out infinite alternate;
         }
 
-        .crest {
-            width: 340px;
-            height: auto;
-            filter: drop-shadow(0px 0px 25px rgba(255, 191, 0, 0.8));
-            animation: pulse 3.5s infinite ease-in-out;
+        @keyframes bgFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
+        @keyframes heroDrift {
+            0%   { transform: scale(1.03) translate(0, 0); }
+            50%  { transform: scale(1.08) translate(-12px, -8px); }
+            100% { transform: scale(1.04) translate(10px, 6px); }
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.04); }
-            100% { transform: scale(1); }
+        /* --- INITIAL EPÒK CREST INTRO --- */
+        #intro-crest {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 220px;
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 0;
+            filter: drop-shadow(0 0 25px rgba(255,215,0,0.8));
+            animation: crestIntro 1.6s ease-out forwards,
+                       crestFadeOut 1.2s ease-out forwards 1.8s;
+            z-index: 10;
         }
 
-        /* Click anywhere to go to the hero landing page */
-        body:hover {
+        @keyframes crestIntro {
+            0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            40%  { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes crestFadeOut {
+            0%   { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* --- MAIN CREST BUTTON (TOP RIGHT) --- */
+        #enter-crest {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            width: 130px;
+            opacity: 0;
             cursor: pointer;
+            transition: transform .3s ease, filter .3s ease;
+            animation: crestButtonFade .9s ease forwards 3.3s;
+            z-index: 20;
+        }
+
+        #enter-crest:hover {
+            transform: scale(1.09);
+            filter: drop-shadow(0 0 16px gold);
+        }
+
+        @keyframes crestButtonFade {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- ENTER HERE TEXT --- */
+        #enter-text {
+            position: fixed;
+            top: 165px;
+            right: 47px;
+            color: white;
+            font-size: 14px;
+            letter-spacing: 3px;
+            opacity: 0;
+            animation: enterTextFade 1s ease forwards 3.5s;
+            text-shadow: 0 0 10px rgba(0,0,0,0.7);
+            z-index: 20;
+        }
+
+        @keyframes enterTextFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0px); }
         }
     </style>
 </head>
 
-<body onclick="location.href='hero.html'">
+<body>
 
-    <div class="crest-container">
-        <img src="assets/images/crest1.png" class="crest" alt="EPØK Crest">
-    </div>
+    <!-- CREST INTRO -->
+    <img id="intro-crest" src="assets/images/crest1.png">
+
+    <!-- HERO BACKGROUND -->
+    <div id="hero-bg"></div>
+
+    <!-- BUTTON CREST -->
+    <img id="enter-crest" src="assets/images/crest1.png" onclick="location.href='index.html'">
+
+    <!-- ENTER TEXT -->
+    <div id="enter-text">ENTER HERE</div>
 
 </body>
 </html>
