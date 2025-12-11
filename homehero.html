@@ -1,285 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EPÒK | Enter Your Era</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPÒK | Enter Your Era</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+            font-family: system-ui, sans-serif;
+        }
 
-    /* ===== HERO BACKGROUND (9378.png) ===== */
-    #hero-bg {
-      position: fixed;
-      inset: 0;
-      background-image: url("assets/images/9378.png");
-      background-size: contain;      /* keep full art, no crop */
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0;
-      transition: opacity 1.6s ease;
-      z-index: 0;
-    }
+        /* ===== HERO BACKGROUND ===== */
+        #hero-bg {
+            position: fixed;
+            inset: 0;
+            background-image: url("assets/images/9378.png");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 2s ease;
+            z-index: 0;
+        }
 
-    .show-bg {
-      opacity: 1;
-      animation: heroDrift 20s ease-in-out infinite alternate;
-    }
+        /* ===== HERO CHARACTER ===== */
+        #hero-character {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            max-height: 90vh;
+            opacity: 0;
+            transition: opacity 2.5s ease;
+            z-index: 2;
+        }
 
-    @keyframes heroDrift {
-      0% {
-        transform: scale(1) translate(0, 0);
-      }
-      50% {
-        transform: scale(1.03) translate(-10px, -6px);
-      }
-      100% {
-        transform: scale(1.01) translate(8px, 4px);
-      }
-    }
+        .show-bg { opacity: 1; }
+        .show-char { opacity: 1; }
 
-    /* ===== HERO CHARACTER (herocharacter.png) ===== */
-    #hero-character {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 90vw;
-      max-height: 90vh;
-      opacity: 0;
-      transition: opacity 1.8s ease;
-      z-index: 1;
-      pointer-events: none;
-    }
+        /* ===== INTRO CREST ===== */
+        #intro-crest {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 240px;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 26px gold);
+            z-index: 10;
+            cursor: pointer;
+        }
 
-    .show-char {
-      opacity: 1;
-      animation: charDrift 24s ease-in-out infinite alternate;
-    }
+        #click-here {
+            position: fixed;
+            top: calc(50% + 150px);
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            z-index: 11;
+            cursor: pointer;
+        }
 
-    @keyframes charDrift {
-      0% {
-        transform: translate(-50%, -50%) scale(1);
-      }
-      50% {
-        transform: translate(calc(-50% - 4px), calc(-50% - 8px)) scale(1.04);
-      }
-      100% {
-        transform: translate(calc(-50% + 3px), calc(-50% + 5px)) scale(1.02);
-      }
-    }
+        .heartbeat {
+            animation: heartbeatPulse 1s ease-in-out infinite;
+        }
 
-    /* ===== INTRO CREST (crest1.png) ===== */
-    #intro-crest {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 220px;
-      max-width: 60vw;
-      transform: translate(-50%, -50%);
-      filter: drop-shadow(0 0 26px rgba(255, 215, 0, 0.85));
-      opacity: 1;
-      z-index: 10;
-      cursor: pointer;
-    }
+        @keyframes heartbeatPulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            30% { transform: translate(-50%, -50%) scale(1.2); }
+            60% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
 
-    #click-here {
-      position: fixed;
-      top: calc(50% + 140px);
-      left: 50%;
-      transform: translateX(-50%);
-      color: #f8f8f8;
-      letter-spacing: 0.25em;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-      cursor: pointer;
-      z-index: 11;
-      user-select: none;
-    }
+        .fade-out {
+            animation: fadeOut 1s ease forwards;
+        }
 
-    .heartbeat {
-      animation: heartbeatPulse 1s ease-in-out infinite;
-    }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
 
-    @keyframes heartbeatPulse {
-      0% {
-        transform: translate(-50%, -50%) scale(1);
-      }
-      30% {
-        transform: translate(-50%, -50%) scale(1.18);
-      }
-      60% {
-        transform: translate(-50%, -50%) scale(1.02);
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
+        /* ===== ENTER BUTTON ===== */
+        #enter-wrap {
+            position: fixed;
+            bottom: 14px;
+            right: 14px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1.4s ease;
+            z-index: 20;
+        }
 
-    .fade-out {
-      animation: crestFadeOut 0.9s ease forwards;
-    }
+        #enter-button {
+            width: 130px;
+            cursor: pointer;
+        }
 
-    @keyframes crestFadeOut {
-      from {
-        opacity: 1;
-      }
-      to {
-        opacity: 0;
-      }
-    }
-
-    /* ===== ENTER BUTTON (8187.png) ===== */
-    #enter-wrap {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      text-align: center;
-      color: #fff;
-      z-index: 20;
-      opacity: 0;
-      transition: opacity 1s ease, transform 0.3s ease;
-    }
-
-    #enter-button {
-      width: 120px;
-      max-width: 30vw;
-      cursor: pointer;
-      filter: drop-shadow(0 0 14px rgba(0, 0, 0, 0.7));
-      transition: transform 0.3s ease, filter 0.3s ease;
-      display: block;
-      margin: 0 auto;
-    }
-
-    #enter-button:hover {
-      transform: scale(1.08);
-      filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.9));
-    }
-
-    #enter-label {
-      margin-top: 4px;
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-    }
-
-    .enter-visible {
-      opacity: 1;
-    }
-
-    @media (max-width: 600px) {
-      #intro-crest {
-        width: 180px;
-      }
-      #click-here {
-        top: calc(50% + 110px);
-        font-size: 0.8rem;
-      }
-      #enter-button {
-        width: 100px;
-      }
-    }
-  </style>
+        .enter-visible { opacity: 1; }
+    </style>
 </head>
 
 <body>
-  <!-- HERO BACKGROUND (9378.png) -->
-  <div id="hero-bg"></div>
 
-  <!-- HERO CHARACTER (herocharacter.png) -->
-  <img
-    id="hero-character"
-    src="assets/images/herocharacter.png"
-    alt="EPÒK Hero"
-  />
+    <!-- HERO BACKGROUND -->
+    <div id="hero-bg"></div>
 
-  <!-- INTRO CREST (crest1.png) -->
-  <img
-    id="intro-crest"
-    src="assets/images/crest1.png"
-    alt="EPÒK Crest"
-  />
+    <!-- HERO CHARACTER -->
+    <img id="hero-character" src="assets/images/herocharacter.png" alt="Hero">
 
-  <!-- CLICK HERE TEXT -->
-  <div id="click-here">CLICK HERE</div>
+    <!-- CREST -->
+    <img id="intro-crest" src="assets/images/crest1.png" alt="EPÒK Crest">
 
-  <!-- ENTER BUTTON (8187.png) -->
-  <div id="enter-wrap">
-    <img
-      id="enter-button"
-      src="assets/images/8187.png"
-      alt="Enter EPÒK"
-    />
-    <div id="enter-label">ENTER</div>
-  </div>
+    <!-- CLICK HERE TEXT -->
+    <div id="click-here">CLICK HERE</div>
 
-  <!-- HEARTBEATAUDIO -->
-  <audio id="heartbeat-audio" src="assets/images/Heartbeatsound.mp3"></audio>
+    <!-- ENTER BUTTON -->
+    <div id="enter-wrap">
+        <img id="enter-button" src="assets/images/8187.png" alt="Enter">
+        <div style="color:white; letter-spacing:0.2em; font-size:0.75rem;">ENTER</div>
+    </div>
 
+    <!-- HEARTBEAT AUDIO -->
+    <audio id="heartbeat-audio" src="assets/images/Heartbeat_sound.mp3"></audio>
 
-  <script>
-    const clickText = document.getElementById("click-here");
+<script>
     const introCrest = document.getElementById("intro-crest");
-    const heroBg = document.getElementById("hero-bg");
-    const heroCharacter = document.getElementById("hero-character");
-    const enterWrap = document.getElementById("enter-wrap");
-    const enterButton = document.getElementById("enter-button");
-    const heartbeat = document.getElementById("heartbeat-audio");
+    const clickHere  = document.getElementById("click-here");
+    const heroBg     = document.getElementById("hero-bg");
+    const heroChar   = document.getElementById("hero-character");
+    const enterWrap  = document.getElementById("enter-wrap");
+    const heartbeat  = document.getElementById("heartbeat-audio");
 
     let started = false;
 
-    function beginIntro() {
-      if (started) return;
-      started = true;
+    function begin() {
+        if (started) return;
+        started = true;
 
-      // hide CLICK HERE
-      clickText.style.display = "none";
+        clickHere.style.display = "none";
+        introCrest.classList.add("heartbeat");
 
-      // heartbeat animation
-      introCrest.classList.add("heartbeat");
-
-      // play sound (may be blocked if browser hates it, but won't break page)
-      heartbeat.currentTime = 0;
-      heartbeat.play().catch(() => {});
-
-      // after 5 seconds, fade crest + show hero
-      setTimeout(() => {
-        introCrest.classList.remove("heartbeat");
-        introCrest.classList.add("fade-out");
-
-        heartbeat.pause();
-        heartbeat.currentTime = 0;
-
-        heroBg.classList.add("show-bg");
-        heroCharacter.classList.add("show-char");
+        heartbeat.play().catch(()=>{});
 
         setTimeout(() => {
-          enterWrap.classList.add("enter-visible");
-        }, 1200);
-      }, 5000);
+            introCrest.classList.add("fade-out");
+            heartbeat.pause();
+
+            heroBg.classList.add("show-bg");
+            heroChar.classList.add("show-char");
+
+            setTimeout(() => {
+                enterWrap.classList.add("enter-visible");
+            }, 1200);
+
+        }, 5000);
     }
 
-    clickText.addEventListener("click", beginIntro);
-    introCrest.addEventListener("click", beginIntro);
+    introCrest.onclick = begin;
+    clickHere.onclick = begin;
 
-    enterButton.addEventListener("click", () => {
-      window.location.href = "index.html"; // change if your main page has a different name
-    });
-  </script>
+    document.getElementById("enter-button").onclick = () => {
+        window.location.href = "home.html";
+    };
+</script>
+
 </body>
 </html>
