@@ -20,12 +20,12 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
-        /* ===== HERO BACKGROUND (src="assets/images/9378.png) ===== */
+        /* ===== HERO BACKGROUND (9378.png) ===== */
         #hero-bg {
             position: fixed;
             inset: 0;
             background-image: url("assets/images/9378.png");
-            background-size: contain;
+            background-size: contain;         /* always show full image */
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0;
@@ -33,7 +33,7 @@
             z-index: 0;
         }
 
-        /* ===== HERO CHARACTER (src="assets/images/herocharacter.png) ===== */
+        /* ===== HERO CHARACTER (herocharacter.png) ===== */
         #hero-character {
             position: fixed;
             top: 50%;
@@ -54,8 +54,8 @@
         }
 
         @keyframes heroDrift {
-            0% { transform: scale(1.0) translate(0, 0); }
-            50% { transform: scale(1.03) translate(-10px, -6px); }
+            0%   { transform: scale(1.0) translate(0, 0); }
+            50%  { transform: scale(1.03) translate(-10px, -6px); }
             100% { transform: scale(1.01) translate(8px, 4px); }
         }
 
@@ -66,8 +66,8 @@
         }
 
         @keyframes charDrift {
-            0% { transform: translate(-50%, -50%) scale(1.0); }
-            50% { transform: translate(calc(-50% - 4px), calc(-50% - 8px)) scale(1.04); }
+            0%   { transform: translate(-50%, -50%) scale(1.0); }
+            50%  { transform: translate(calc(-50% - 4px), calc(-50% - 8px)) scale(1.04); }
             100% { transform: translate(calc(-50% + 3px), calc(-50% + 5px)) scale(1.02); }
         }
 
@@ -85,6 +85,7 @@
             cursor: pointer;
         }
 
+        /* CLICK HERE text */
         #click-here {
             position: fixed;
             top: calc(50% + 140px);
@@ -97,9 +98,10 @@
             text-shadow: 0 0 10px rgba(0,0,0,0.8);
             cursor: pointer;
             z-index: 11;
+            user-select: none;
         }
 
-        /* Heartbeat animation */
+        /* Heartbeat animation on crest */
         .heartbeat {
             animation: heartbeatPulse 1s ease-in-out infinite;
         }
@@ -111,7 +113,7 @@
             100% { transform: translate(-50%, -50%) scale(1.0); }
         }
 
-        /* Fade out crest */
+        /* Crest fade out */
         .fade-out {
             animation: crestFadeOut 0.9s ease forwards;
         }
@@ -121,7 +123,7 @@
             to   { opacity: 0; }
         }
 
-        /* ===== ENTER BUTTON (8187.png) ===== */
+        /* ===== EPÒK ENTER BUTTON (8187.png) BOTTOM RIGHT ===== */
         #enter-wrap {
             position: fixed;
             bottom: 10px;
@@ -135,89 +137,126 @@
 
         #enter-button {
             width: 120px;
+            max-width: 30vw;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 14px rgba(0,0,0,0.7));
+            transition: transform 0.3s ease, filter 0.3s ease;
+            display: block;
+            margin: 0 auto;
         }
 
         #enter-button:hover {
             transform: scale(1.08);
+            filter: drop-shadow(0 0 18px rgba(255,215,0,0.9));
         }
 
         #enter-label {
+            margin-top: 4px;
             font-size: 0.75rem;
             letter-spacing: 0.25em;
-            margin-top: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 8px rgba(0,0,0,0.8);
         }
 
         .enter-visible {
             opacity: 1;
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 600px) {
+            #intro-crest {
+                width: 180px;
+            }
+            #click-here {
+                top: calc(50% + 110px);
+                font-size: 0.8rem;
+            }
+            #enter-button {
+                width: 100px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- HERO BACKGROUND -->
-  <div id="hero-bg"></div>
+    <!-- HERO BACKGROUND LAYER (9378.png) -->
+    <div id="hero-bg"></div>
 
-    <!-- HERO CHARACTER -->
-   <img id="hero-character" src="epok/assets/images/herocharacter.png" />
+    <!-- HERO CHARACTER LAYER (herocharacter.png) -->
+    <img id="hero-character" src="assets/images/herocharacter.png" alt="EPÒK Hero">
 
-    <!-- CENTER CREST -->
-    <img id="intro-crest" src="epok/assets/images/crest1.png" />
+    <!-- INTRO CREST IN CENTER (crest1.png) -->
+    <img id="intro-crest" src="assets/images/crest1.png" alt="EPÒK Crest">
 
-    <!-- CLICK HERE -->
+    <!-- CLICK HERE TEXT -->
     <div id="click-here">CLICK HERE</div>
 
-    <!-- ENTER BUTTON -->
+    <!-- EPÒK ENTER BUTTON (8187.png) BOTTOM RIGHT -->
     <div id="enter-wrap">
-        <img id="enter-button" src="epok/assets/images/8187.png" />
+        <img id="enter-button" src="assets/images/8187.png" alt="Enter EPÒK">
         <div id="enter-label">ENTER</div>
     </div>
 
-    <!-- HEARTBEAT SOUND -->
+    <!-- HEARTBEAT AUDIO (Heartbeat sound.mp3) -->
     <audio id="heartbeat-audio" src="assets/images/Heartbeat%20sound.mp3"></audio>
 
     <script>
-        const clickText     = document.getElementById("click-here");
-        const introCrest    = document.getElementById("intro-crest");
-        const heroBg        = document.getElementById("hero-bg");
-        const heroCharacter = document.getElementById("hero-character");
-        const enterWrap     = document.getElementById("enter-wrap");
-        const heartbeat     = document.getElementById("heartbeat-audio");
+        const clickText     = document.getElementById('click-here');
+        const introCrest    = document.getElementById('intro-crest');
+        const heroBg        = document.getElementById('hero-bg');
+        const heroCharacter = document.getElementById('hero-character');
+        const enterWrap     = document.getElementById('enter-wrap');
+        const enterButton   = document.getElementById('enter-button');
+        const heartbeat     = document.getElementById('heartbeat-audio');
 
-        let started = false;
+        let hasStarted = false;
 
-        function begin() {
-            if (started) return;
-            started = true;
+        function startIntro() {
+            if (hasStarted) return;
+            hasStarted = true;
 
-            clickText.style.display = "none";
-            introCrest.classList.add("heartbeat");
+            // hide CLICK HERE text
+            clickText.style.display = 'none';
 
-            heartbeat.play().catch(()=>{});
+            // start heartbeat animation on crest
+            introCrest.classList.add('heartbeat');
 
-            setTimeout(() => {
-                introCrest.classList.add("fade-out");
-
-                heartbeat.pause();
+            // play heartbeat audio
+            if (heartbeat) {
                 heartbeat.currentTime = 0;
+                heartbeat.play().catch(() => {});
+            }
 
-                heroBg.classList.add("show-bg");
-                heroCharacter.classList.add("show-char");
+            // after 5 seconds: fade crest, show hero + character + enter button
+            setTimeout(() => {
+                introCrest.classList.remove('heartbeat');
+                introCrest.classList.add('fade-out');
 
+                if (heartbeat) {
+                    heartbeat.pause();
+                    heartbeat.currentTime = 0;
+                }
+
+                // fade in hero background + character
+                heroBg.classList.add('show-bg');
+                heroCharacter.classList.add('show-char');
+
+                // show enter button after short delay
                 setTimeout(() => {
-                    enterWrap.classList.add("enter-visible");
+                    enterWrap.classList.add('enter-visible');
                 }, 1200);
 
-            }, 5000);
+            }, 5000); // 5 seconds of heartbeat
         }
 
-        clickText.addEventListener("click", begin);
-        introCrest.addEventListener("click", begin);
+        // "CLICK HERE" and clicking emblem both start the sequence
+        clickText.addEventListener('click', startIntro);
+        introCrest.addEventListener('click', startIntro);
 
-        document.getElementById("enter-button").addEventListener("click", () => {
-            window.location.href = "home.html";
+        // ENTER button → main home page
+        enterButton.addEventListener('click', () => {
+            window.location.href = 'index.html';
         });
     </script>
 
