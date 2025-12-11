@@ -1,243 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EPÒK | Enter Your Era</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EPÒK | Enter</title>
 
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            background: #000;
+            background: black;
             overflow: hidden;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            height: 100vh;
+            width: 100vw;
         }
 
-        /* ===== MAIN HERO BACKGROUND (AFTER INTRO) ===== */
-        #hero-bg {
+        /* ----------------------------- */
+        /*   PHASE 1 — EMBLEM SCREEN     */
+        /* ----------------------------- */
+
+        #emblem-screen {
             position: fixed;
             inset: 0;
-            background-image: url("assets/images/9378.png"); /* your hero art */
-            background-size: contain;       /* always show full image */
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            animation: bgFadeIn 1.8s ease forwards;
-            animation-delay: 5s;           /* starts after heartbeat finishes */
-        }
-
-        /* subtle cinematic drift */
-        @keyframes heroDrift {
-            0%   { transform: scale(1.0) translate(0, 0); }
-            50%  { transform: scale(1.03) translate(-10px, -6px); }
-            100% { transform: scale(1.01) translate(8px, 4px); }
-        }
-
-        /* we apply this once background is visible (JS) */
-        .drifting {
-            animation: heroDrift 18s ease-in-out infinite alternate;
-        }
-
-        @keyframes bgFadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
-
-        /* ===== CENTERED INTRO EMBLEM ===== */
-        #intro-crest {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 220px;
-            max-width: 60vw;
-            transform: translate(-50%, -50%);
-            filter: drop-shadow(0 0 26px rgba(255,215,0,0.85));
-            opacity: 1;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             z-index: 10;
+            animation: fadeOut 1s ease forwards;
+            animation-play-state: paused;
+            animation-delay: 5s; /* fades after heartbeat */
         }
 
-        /* CLICK HERE TEXT UNDER INTRO EMBLEM */
-        #click-here {
-            position: fixed;
-            top: calc(50% + 140px);
-            left: 50%;
-            transform: translateX(-50%);
-            color: #f8f8f8;
-            letter-spacing: 0.25em;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0,0,0,0.8);
-            cursor: pointer;
-            z-index: 11;
-            user-select: none;
-        }
-
-        /* heartbeat (scale) animation on crest after click */
-        .heartbeat {
-            animation: heartbeatPulse 1s ease-in-out infinite;
-        }
-
-        @keyframes heartbeatPulse {
-            0%   { transform: translate(-50%, -50%) scale(1.0); }
-            30%  { transform: translate(-50%, -50%) scale(1.13); }
-            60%  { transform: translate(-50%, -50%) scale(1.03); }
-            100% { transform: translate(-50%, -50%) scale(1.0); }
-        }
-
-        /* FADE OUT INTRO CREST */
-        .fade-out {
-            animation: crestFadeOut 0.9s ease forwards;
-        }
-
-        @keyframes crestFadeOut {
-            from { opacity: 1; }
-            to   { opacity: 0; }
-        }
-
-        /* ===== EPÒK BUTTON BOTTOM RIGHT AFTER INTRO ===== */
-        #enter-wrap {
-            position: fixed;
-            bottom: 10px;   /* A: tight in the corner */
-            right: 10px;
-            text-align: center;
-            color: #fff;
-            z-index: 20;
-            opacity: 0;
-            transition: opacity 1s ease, transform 0.3s ease;
-        }
-
-        #enter-button {
-            width: 120px;
-            max-width: 30vw;
-            cursor: pointer;
-            filter: drop-shadow(0 0 14px rgba(0,0,0,0.7));
-            transition: transform 0.3s ease, filter 0.3s ease;
-            display: block;
-            margin: 0 auto;
-        }
-
-        #enter-button:hover {
-            transform: scale(1.08);
-            filter: drop-shadow(0 0 18px rgba(255,215,0,0.9));
-        }
-
-        #enter-label {
-            margin-top: 4px;
-            font-size: 0.75rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            text-shadow: 0 0 8px rgba(0,0,0,0.8);
-        }
-
-        .enter-visible {
+        #emblem-img {
+            width: 200px;
             opacity: 1;
+            animation: heartbeat 1s ease-in-out infinite;
+            cursor: pointer;
         }
 
-        /* MOBILE TWEAKS */
-        @media (max-width: 600px) {
-            #intro-crest {
-                width: 180px;
-            }
-            #click-here {
-                top: calc(50% + 110px);
-                font-size: 0.8rem;
-            }
-            #enter-button {
-                width: 100px;
-            }
+        #click-here {
+            margin-top: 15px;
+            font-family: Arial, sans-serif;
+            color: white;
+            font-size: 18px;
+            opacity: 0.85;
+        }
+
+        @keyframes heartbeat {
+            0%   { transform: scale(1); }
+            25%  { transform: scale(1.10); }
+            50%  { transform: scale(1); }
+            75%  { transform: scale(1.12); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to   { opacity: 0; visibility: hidden; }
+        }
+
+        /* ----------------------------- */
+        /*   PHASE 2 — HERO BACKGROUND   */
+        /* ----------------------------- */
+
+        #hero-wrapper {
+            position: fixed;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        #hero-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            animation: camMove 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes camMove {
+            0%   { transform: scale(1) translate(0, 0); }
+            50%  { transform: scale(1.05) translate(-10px, -8px); }
+            100% { transform: scale(1.03) translate(8px, 6px); }
+        }
+
+        /* HERO CHARACTER LAYER */
+        #hero-character {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 100%;
+            max-width: 1080px;
+            pointer-events: none;
+        }
+
+        /* ----------------------------- */
+        /*    ENTER BUTTON (EPÒK CREST)  */
+        /* ----------------------------- */
+
+        #enter-btn {
+            position: absolute;
+            bottom: 32px;
+            right: 32px;
+            width: 120px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #enter-text {
+            position: absolute;
+            bottom: 14px;
+            right: 48px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        #enter-btn:hover {
+            transform: scale(1.08);
         }
     </style>
 </head>
 
 <body>
 
-    <!-- HERO BACKGROUND (shown AFTER heartbeat) -->
-    <div id="hero-bg"></div>
+    <!-- 🔊 HEARTBEAT AUDIO -->
+    <audio id="heartbeat-audio" src="assets/images/heartbeat.mp3"></audio>
 
-    <!-- INTRO CREST (center) -->
-    <img id="intro-crest" src="assets/images/crest1.png" alt="EPÒK Crest">
-
-    <!-- CLICK HERE TEXT -->
-    <div id="click-here">CLICK HERE</div>
-
-    <!-- EPÒK ENTER BUTTON BOTTOM RIGHT -->
-    <div id="enter-wrap">
-       <img id="enter-button" src="assets/images/8187.png?x=1" alt="Enter EPÒK">
-        <div id="enter-label">ENTER</div>
+    <!-- ---------------------------- -->
+    <!-- PHASE 1 — EMBLEM SCREEN     -->
+    <!-- ---------------------------- -->
+    <div id="emblem-screen">
+        <img id="emblem-img" src="assets/images/crest1.png" />
+        <div id="click-here">Click Here</div>
     </div>
 
-    <!-- HEARTBEAT AUDIO (you must add assets/audio/heartbeat.mp3) -->
-    <audio id="heartbeat-audio" src="assets/images/Heartbeat sound.mp3"></audio>
+    <!-- ---------------------------- -->
+    <!-- PHASE 2 — HERO SCREEN        -->
+    <!-- ---------------------------- -->
+    <div id="hero-wrapper">
+        <div id="hero-bg" style="background-image:url('assets/images/9378.png');"></div>
+        <img id="hero-character" src="assets/images/herocharacter.png" />
+
+        <!-- ENTER BUTTON -->
+        <img id="enter-btn" src="assets/images/8187.png" onclick="location.href='home.html'">
+        <div id="enter-text">ENTER</div>
+    </div>
 
     <script>
-        const clickText   = document.getElementById('click-here');
-        const introCrest  = document.getElementById('intro-crest');
-        const heroBg      = document.getElementById('hero-bg');
-        const enterWrap   = document.getElementById('enter-wrap');
-        const enterButton = document.getElementById('enter-button');
-        const heartbeat   = document.getElementById('heartbeat-audio');
+        const emblemScreen = document.getElementById("emblem-screen");
+        const emblemImg = document.getElementById("emblem-img");
+        const clickText = document.getElementById("click-here");
+        const heartbeat = document.getElementById("heartbeat-audio");
+        const heroWrapper = document.getElementById("hero-wrapper");
 
         let hasStarted = false;
 
-        function startIntro() {
+        emblemImg.addEventListener("click", () => {
             if (hasStarted) return;
             hasStarted = true;
 
-            // hide CLICK HERE
-            clickText.style.display = 'none';
+            clickText.style.display = "none";
 
-            // start heartbeat animation on crest
-            introCrest.classList.add('heartbeat');
+            heartbeat.volume = 1.0;
+            heartbeat.play();
 
-            // try to play heartbeat audio (user clicked, so allowed)
-            if (heartbeat) {
-                heartbeat.currentTime = 0;
-                heartbeat.play().catch(() => {
-                    // some browsers may still block, but it's fine
-                });
-            }
+            emblemScreen.style.animationPlayState = "running";
 
-            // after ~5 seconds: stop heartbeat, fade crest, show hero + button
             setTimeout(() => {
-                introCrest.classList.remove('heartbeat');
-                introCrest.classList.add('fade-out');
-
-                // stop heartbeat sound after crest fades
-                if (heartbeat) {
-                    heartbeat.pause();
-                    heartbeat.currentTime = 0;
-                }
-
-                // enable hero background drift
-                heroBg.classList.add('drifting');
-
-                // show enter button slightly after hero fade in
-                setTimeout(() => {
-                    enterWrap.classList.add('enter-visible');
-                }, 1200);
-
-            }, 5000); // 5 seconds of heartbeat
-        }
-
-        // click triggers from "CLICK HERE" and crest itself (in case they tap the emblem)
-        clickText.addEventListener('click', startIntro);
-        introCrest.addEventListener('click', startIntro);
-
-        // ENTER button sends them to main site
-        enterButton.addEventListener('click', () => {
-            window.location.href = 'index.html';
+                heroWrapper.style.opacity = "1";
+            }, 5000);
         });
     </script>
-
-</body>
-</html>
 
 </body>
 </html>
