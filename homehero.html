@@ -1,196 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EPÒK | Enter Your Era</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPÒK | Enter Your Era</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
 
-    /* HERO BACKGROUND (9378.png) */
-    #hero-bg {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: contain;
-      opacity: 0;
-      transition: opacity 1.6s ease;
-      z-index: 0;
-      pointer-events: none;
-    }
+        /* ===== HERO BACKGROUND (9378.png) ===== */
+        #hero-bg {
+            position: fixed;
+            inset: 0;
+            background-image: url("assets/images/9378.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0;
+            transition: opacity 1.8s ease;
+            z-index: 1;
+        }
 
-    .show-bg {
-      opacity: 1;
-      animation: heroDrift 20s ease-in-out infinite alternate;
-    }
+        .show-bg {
+            opacity: 1;
+        }
 
-    @keyframes heroDrift {
-      0%   { transform: scale(1) translate(0,0); }
-      50%  { transform: scale(1.03) translate(-10px,-6px); }
-      100% { transform: scale(1.01) translate(8px,4px); }
-    }
+        /* ===== INTRO CREST ===== */
+        #intro-crest {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 240px;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 26px rgba(255,215,0,0.85));
+            cursor: pointer;
+            z-index: 10;
+        }
 
-    /* INTRO CREST */
-    #intro-crest {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 220px;
-      max-width: 60vw;
-      transform: translate(-50%, -50%);
-      filter: drop-shadow(0 0 26px rgba(255,215,0,0.85));
-      opacity: 1;
-      z-index: 10;
-      cursor: pointer;
-    }
+        #click-here {
+            position: fixed;
+            top: calc(50% + 160px);
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 1rem;
+            letter-spacing: 0.25em;
+            text-shadow: 0 0 15px black;
+            cursor: pointer;
+            z-index: 10;
+        }
 
-    #click-here {
-      position: fixed;
-      top: calc(50% + 140px);
-      left: 50%;
-      transform: translateX(-50%);
-      color: #f8f8f8;
-      letter-spacing: 0.25em;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(0,0,0,0.8);
-      cursor: pointer;
-      z-index: 11;
-      user-select: none;
-    }
+        /* Heartbeat animation */
+        .heartbeat {
+            animation: heartbeatPulse 1s ease-in-out infinite;
+        }
 
-    .heartbeat {
-      animation: heartbeatPulse 1s ease-in-out infinite;
-    }
+        @keyframes heartbeatPulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            30% { transform: translate(-50%, -50%) scale(1.22); }
+            60% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
 
-    @keyframes heartbeatPulse {
-      0%   { transform: translate(-50%, -50%) scale(1); }
-      30%  { transform: translate(-50%, -50%) scale(1.18); }
-      60%  { transform: translate(-50%, -50%) scale(1.02); }
-      100% { transform: translate(-50%, -50%) scale(1); }
-    }
+        /* Fade out crest */
+        .fade-out {
+            animation: fadeOut 1s forwards;
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
 
-    .fade-out {
-      animation: crestFadeOut 0.9s ease forwards;
-    }
+        /* ===== ENTER BUTTON ===== */
+        #enter-wrap {
+            position: fixed;
+            bottom: 12px;
+            right: 12px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 20;
+        }
 
-    @keyframes crestFadeOut {
-      from { opacity: 1; }
-      to   { opacity: 0; }
-    }
+        #enter-button {
+            width: 120px;
+            cursor: pointer;
+        }
 
-    /* ENTER BUTTON */
-    #enter-wrap {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      text-align: center;
-      color: #fff;
-      z-index: 20;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
+        #enter-label {
+            color: white;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            margin-top: 4px;
+        }
 
-    #enter-button {
-      width: 120px;
-      max-width: 30vw;
-      cursor: pointer;
-      filter: drop-shadow(0 0 14px rgba(0,0,0,0.7));
-      transition: transform 0.3s ease;
-      display: block;
-      margin: 0 auto;
-    }
-
-    #enter-button:hover {
-      transform: scale(1.08);
-    }
-
-    #enter-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.25em;
-      margin-top: 4px;
-    }
-
-    .enter-visible {
-      opacity: 1;
-    }
-  </style>
+        .enter-visible {
+            opacity: 1;
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- HERO BACKGROUND -->
-  <img id="hero-bg" src="assets/images/9378.png">
+    <!-- HERO BACKGROUND -->
+    <div id="hero-bg"></div>
 
-  <!-- INTRO CREST -->
-  <img id="intro-crest" src="assets/images/crest1.png" alt="EPÒK Crest"/>
+    <!-- CREST -->
+    <img id="intro-crest" src="assets/images/crest1.png">
 
-  <!-- CLICK HERE -->
-  <div id="click-here">CLICK HERE</div>
+    <!-- CLICK HERE LABEL -->
+    <div id="click-here">CLICK HERE</div>
 
-  <!-- ENTER BUTTON -->
-  <div id="enter-wrap">
-    <img id="enter-button" src="assets/images/8187.png" alt="Enter EPÒK">
-    <div id="enter-label">ENTER</div>
-  </div>
+    <!-- ENTER BUTTON -->
+    <div id="enter-wrap">
+        <img id="enter-button" src="assets/images/8187.png">
+        <div id="enter-label">ENTER</div>
+    </div>
 
-  <!-- HEARTBEAT AUDIO -->
-  <audio id="heartbeat-audio" src="assets/heartbeat.mp3"></audio>
+    <!-- HEARTBEAT AUDIO -->
+    <audio id="heartbeat-audio" src="assets/Heartbeat.mp3"></audio>
 
-  <script>
-    const clickText  = document.getElementById("click-here");
-    const introCrest = document.getElementById("intro-crest");
-    const heroBg     = document.getElementById("hero-bg");
-    const enterWrap  = document.getElementById("enter-wrap");
-    const heartbeat  = document.getElementById("heartbeat-audio");
+    <script>
+        const crest = document.getElementById("intro-crest");
+        const clickLabel = document.getElementById("click-here");
+        const heroBg = document.getElementById("hero-bg");
+        const enterWrap = document.getElementById("enter-wrap");
+        const heartbeat = document.getElementById("heartbeat-audio");
 
-    let started = false;
+        let started = false;
 
-    function startIntro() {
-      if (started) return;
-      started = true;
+        function startSequence() {
+            if (started) return;
+            started = true;
 
-      clickText.style.display = "none";
-      introCrest.classList.add("heartbeat");
+            clickLabel.style.display = "none";
+            crest.classList.add("heartbeat");
 
-      heartbeat.play().catch(() => {});
+            heartbeat.play().catch(()=>{});
 
-      setTimeout(() => {
-        introCrest.classList.remove("heartbeat");
-        introCrest.classList.add("fade-out");
+            setTimeout(() => {
+                crest.classList.add("fade-out");
+                heartbeat.pause();
 
-        heartbeat.pause();
-        heartbeat.currentTime = 0;
+                heroBg.classList.add("show-bg");
 
-        heroBg.classList.add("show-bg");
+                setTimeout(() => {
+                    enterWrap.classList.add("enter-visible");
+                }, 1200);
 
-        setTimeout(() => {
-          enterWrap.classList.add("enter-visible");
-        }, 1200);
-      }, 5000);
-    }
+            }, 5000);
+        }
 
-    clickText.addEventListener("click", startIntro);
-    introCrest.addEventListener("click", startIntro);
+        crest.addEventListener("click", startSequence);
+        clickLabel.addEventListener("click", startSequence);
 
-    document.getElementById("enter-button").addEventListener("click", () => {
-      window.location.href = "index.html";
-    });
-  </script>
+        document.getElementById("enter-button").addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
+    </script>
 
 </body>
 </html>
